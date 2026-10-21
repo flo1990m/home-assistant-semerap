@@ -1,7 +1,7 @@
 {
   "domain": "semerap",
   "name": "SEMERAP Eau",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "documentation": "https://github.com/flo1990m/home-assistant-semerap",
   "issue_tracker": "https://github.com/flo1990m/home-assistant-semerap/issues",
   "codeowners": [],
