@@ -1,0 +1,20 @@
+import_readings:
+  name: Importer des relevés historiques
+  description: Ajoute des relevés datés dans l'archive locale SEMERAP, sans écraser les relevés déjà présents.
+  fields:
+    pdc_ref:
+      name: Point de comptage
+      description: Facultatif si un seul compteur SEMERAP est configuré.
+      example: "18929"
+      selector:
+        text:
+    readings:
+      name: Relevés
+      description: Liste de relevés avec date ISO, index, consommation et éventuellement type et counterRef.
+      required: true
+      example: |
+        - date: "2020-05-25"
+          index: 488
+          consumption: 20
+      selector:
+        object:
