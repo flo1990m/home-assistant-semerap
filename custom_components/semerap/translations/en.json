@@ -1,0 +1,1 @@
+{"config":{"step":{"user":{"title":"SEMERAP login","description":"Connect to your SEMERAP customer account. Readings are typically twice per year.","data":{"username":"Customer login","password":"Password"}}},"error":{"invalid_auth":"Invalid credentials","cannot_connect":"Unable to load water meters"},"abort":{"already_configured":"This meter is already configured"}}}

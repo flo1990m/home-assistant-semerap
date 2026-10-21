@@ -1,0 +1,12 @@
+{
+  "domain": "semerap",
+  "name": "SEMERAP Eau",
+  "version": "1.0.0",
+  "documentation": "https://github.com/flo1990m/home-assistant-semerap",
+  "issue_tracker": "https://github.com/flo1990m/home-assistant-semerap/issues",
+  "codeowners": [],
+  "config_flow": true,
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "requirements": []
+}

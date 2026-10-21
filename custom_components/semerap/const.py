@@ -1,0 +1,5 @@
+"""Constants for the SEMERAP water integration."""
+DOMAIN = "semerap"
+API_BASE = "https://test-ael.semerap.fr"
+ORIGIN = "https://agence-en-ligne.semerap.fr"
+CONF_PDC = "pdc_ref"
