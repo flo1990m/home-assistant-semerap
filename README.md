@@ -36,3 +36,39 @@ Pour migrer depuis les versions 0.1/0.2 installées manuellement : ne supprimez 
 ## Version 1.0.0
 
 Première publication GitHub/HACS, archive locale persistante, six capteurs et image de marque.
+
+
+## Import de relevés historiques (v1.1.0)
+
+Dans Home Assistant, ouvrir **Outils de développement > Actions**, puis choisir
+`semerap.import_readings`. Les relevés sont sauvegardés dans l'archive persistante
+de l'intégration et immédiatement rendus disponibles dans l'attribut `readings`
+du capteur d'index.
+
+Exemple en YAML :
+
+```yaml
+action: semerap.import_readings
+data:
+  pdc_ref: "18929"
+  readings:
+    - date: "2020-05-25"
+      index: 488
+      consumption: 20
+      type: radio
+      counterRef: "06Z0205521"
+```
+
+- `date` : format `YYYY-MM-DD`, obligatoire ;
+- `index` : index numérique non négatif en m³, obligatoire ;
+- `consumption` : volume consommé depuis le relevé précédent, facultatif ;
+- `type`, `counterRef` : métadonnées facultatives ;
+- `pdc_ref` : facultatif si une seule configuration SEMERAP existe.
+
+Les dates déjà présentes sont conservées (l'import ne les remplace pas).
+Les valeurs de l'API SEMERAP continueront à être mises à jour lors de la synchronisation quotidienne.
+
+**Attention :** en cas de remplacement du compteur, ne jamais soustraire directement
+l'index de l'ancien compteur de celui du nouveau. Renseigner la consommation
+facturée sur chaque relevé pour une comparaison historique correcte.
+
