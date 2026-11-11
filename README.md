@@ -33,9 +33,9 @@ Pour migrer depuis les versions 0.1/0.2 installées manuellement : ne supprimez 
 - Les identifiants sont dans les données privées de configuration Home Assistant ; ne publiez jamais `.storage`.
 - Le logo appartient à SEMERAP. Ce projet n’est pas affilié à SEMERAP.
 
-## Version 1.0.0
+## Version 1.1.2
 
-Première publication GitHub/HACS, archive locale persistante, six capteurs et image de marque.
+Version préparée pour la publication dans le catalogue officiel HACS. Aucun changement fonctionnel par rapport à la version 1.1.1.
 
 
 ## Import de relevés historiques (v1.1.0)
