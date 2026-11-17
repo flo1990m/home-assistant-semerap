@@ -23,7 +23,8 @@
       "cannot_connect": "Impossible de récupérer les compteurs"
     },
     "abort": {
-      "already_configured": "Ce compteur est déjà configuré"
+      "already_configured": "Ce compteur est déjà configuré",
+      "reauth_successful": "Les identifiants ont été mis à jour avec succès"
     }
   }
 }
