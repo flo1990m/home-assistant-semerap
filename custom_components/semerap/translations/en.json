@@ -1,1 +1,30 @@
-{"config":{"step":{"user":{"title":"SEMERAP login","description":"Connect to your SEMERAP customer account. Readings are typically twice per year.","data":{"username":"Customer login","password":"Password"}}},"error":{"invalid_auth":"Invalid credentials","cannot_connect":"Unable to load water meters"},"abort":{"already_configured":"This meter is already configured"}}}
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SEMERAP login",
+        "description": "Connect to your SEMERAP customer account. Readings are typically twice per year.",
+        "data": {
+          "username": "Customer login",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Update SEMERAP credentials",
+        "description": "The saved credentials are no longer valid. Enter your new credentials to restore the connection.",
+        "data": {
+          "username": "Customer login",
+          "password": "New password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid credentials",
+      "cannot_connect": "Unable to load water meters"
+    },
+    "abort": {
+      "already_configured": "This meter is already configured",
+      "reauth_successful": "Credentials updated successfully"
+    }
+  }
+}
