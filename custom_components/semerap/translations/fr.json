@@ -1,1 +1,30 @@
-{"config":{"step":{"user":{"title":"Connexion SEMERAP","description":"Connecter l'espace client SEMERAP. Les relevés sont généralement semestriels.","data":{"username":"Identifiant client","password":"Mot de passe"}}},"error":{"invalid_auth":"Identifiants incorrects","cannot_connect":"Impossible de récupérer les compteurs"},"abort":{"already_configured":"Ce compteur est déjà configuré"}}}
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connexion SEMERAP",
+        "description": "Connecter l'espace client SEMERAP. Les relevés sont généralement semestriels.",
+        "data": {
+          "username": "Identifiant client",
+          "password": "Mot de passe"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Mettre à jour les identifiants SEMERAP",
+        "description": "Les identifiants enregistrés ne sont plus valides. Saisis tes nouveaux identifiants pour rétablir la connexion.",
+        "data": {
+          "username": "Identifiant client",
+          "password": "Nouveau mot de passe"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Identifiants incorrects",
+      "cannot_connect": "Impossible de récupérer les compteurs"
+    },
+    "abort": {
+      "already_configured": "Ce compteur est déjà configuré",
+      "reauth_successful": "Les identifiants ont été mis à jour avec succès"
+    }
+  }
+}
