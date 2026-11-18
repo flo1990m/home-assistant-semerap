@@ -7,6 +7,7 @@ import voluptuous as vol
 from datetime import date, timedelta
 from typing import Any
 
+from homeassistant.components import persistent_notification
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant, ServiceCall
@@ -102,6 +103,26 @@ class SemerapCoordinator(DataUpdateCoordinator):
         history = sorted(self._archive.values(), key=lambda row: row["date"], reverse=True)
         return {"latest": history[0], "history": history}
 
+    def _notify_new_reading(self, reading: dict[str, Any]) -> None:
+        """Create one persistent Home Assistant notification for a new API reading."""
+        reading_date = date.fromisoformat(reading["date"])
+        message = (
+            f"Un nouveau relevé de consommation d'eau a été reçu pour le compteur "
+            f"SEMERAP **{self.pdc}**.\n\n"
+            f"- **Date du relevé :** {reading_date.strftime('%d/%m/%Y')}\n"
+            f"- **Index compteur :** {reading['index']:g} m³"
+        )
+        consumption = reading.get("consumption")
+        if consumption is not None:
+            message += f"\n- **Consommation depuis le précédent relevé :** {consumption:g} m³"
+        notification_id = f"semerap_{self.pdc}_{reading['date']}"
+        persistent_notification.async_create(
+            self.hass,
+            message,
+            title="Nouveau relevé SEMERAP",
+            notification_id=notification_id,
+        )
+
     async def _async_update_data(self):
         try:
             rows = await self.client.statements(self.pdc)
@@ -111,11 +132,25 @@ class SemerapCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(str(err)) from err
         if not isinstance(rows, list):
             raise UpdateFailed("Invalid SEMERAP readings")
+
+        # Only readings newer than the newest archived date are considered new.
+        # This avoids notifications on first setup, historical imports and API
+        # backfills of older statements.
+        previous_latest_date = max(self._archive, default=None)
         incoming = {}
         for row in rows:
             normalized = _normalize_reading(row)
             if normalized:
                 incoming[normalized["date"]] = normalized
+
+        new_readings = sorted(
+            (
+                reading for reading_date, reading in incoming.items()
+                if previous_latest_date is not None and reading_date > previous_latest_date
+            ),
+            key=lambda reading: reading["date"],
+        )
+
         if incoming:
             updated = dict(self._archive)
             updated.update(incoming)
@@ -128,6 +163,15 @@ class SemerapCoordinator(DataUpdateCoordinator):
                 except Exception as err:
                     raise UpdateFailed("Could not persist SEMERAP readings") from err
                 self._archive = updated
+                for reading in new_readings:
+                    try:
+                        self._notify_new_reading(reading)
+                    except Exception:
+                        _LOGGER.exception(
+                            "Could not create notification for SEMERAP reading %s (%s)",
+                            reading["date"], self.pdc,
+                        )
+
         if not self._archive:
             raise UpdateFailed("No valid SEMERAP readings")
         return self._result()
